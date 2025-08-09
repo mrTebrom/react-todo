@@ -6,12 +6,11 @@ import {
     DeleteOutlined,
     ClockCircleOutlined,
     PlusOutlined,
+    FileOutlined,
+    EditOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import {
-    useCreateProjectMutation,
-    useGetAllProjectsQuery,
-} from "../service/project.service";
+import { useGetAllProjectsQuery } from "../service/project.service";
 import { CreateProject } from "../components/project.create";
 import { useState } from "react";
 const { Sider } = Layout;
@@ -50,6 +49,44 @@ export const AsideApp = () => {
             icon: <DeleteOutlined />,
         },
     ];
+    const projectLinks: MenuProps["items"] = data?.map((item) => ({
+        label: item.name,
+        key: item.id,
+        icon: <FileOutlined />,
+        children: [
+            {
+                icon: <DeleteOutlined />,
+                key: `destroy-project-${item.id}`,
+                label: (
+                    <Button
+                        type="text"
+                        danger
+                        size="small"
+                        style={{ padding: 0 }}
+                    >
+                        Удалить
+                    </Button>
+                ),
+            },
+            {
+                icon: <EditOutlined />,
+                key: `edit-project-${item.id}`,
+                label: (
+                    <Button
+                        type="text"
+                        danger={false}
+                        size="small"
+                        style={{
+                            padding: 0,
+                            color: "#faad14" /* warning color */,
+                        }}
+                    >
+                        Изменить
+                    </Button>
+                ),
+            },
+        ],
+    }));
     return (
         <>
             <Sider width={200} style={{ backgroundColor: "#ffffff" }}>
@@ -81,10 +118,10 @@ export const AsideApp = () => {
                     </Flex>
                 </Flex>
                 <Menu
-                    mode="inline"
+                    mode="vertical"
                     defaultSelectedKeys={["1"]}
                     defaultOpenKeys={["sub1"]}
-                    items={basicLink}
+                    items={projectLinks}
                 />
             </Sider>
             <CreateProject
