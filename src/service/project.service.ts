@@ -6,14 +6,14 @@ export const projectApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
     tagTypes: ["Project"],
     endpoints: (build) => ({
-        getAll: build.query<IProject[], void>({
+        getAllProjects: build.query<IProject[], void>({
             // здесь IProject[]
             query: () => ({
                 url: `/projects`,
             }),
             providesTags: () => ["Project"],
         }),
-        createPost: build.mutation<IProject, CreateProject>({
+        createProject: build.mutation<IProject, CreateProject>({
             // создаём с CreateProject
             query: (post) => ({
                 url: `/projects`,
@@ -22,7 +22,7 @@ export const projectApi = createApi({
             }),
             invalidatesTags: ["Project"],
         }),
-        updatePost: build.mutation<IProject, IProject>({
+        updateProject: build.mutation<IProject, IProject>({
             query: (post) => ({
                 url: `/projects/${post.id}`,
                 method: "PUT",
@@ -30,7 +30,7 @@ export const projectApi = createApi({
             }),
             invalidatesTags: ["Project"],
         }),
-        deletePost: build.mutation<IProject, IProject>({
+        deleteProject: build.mutation<IProject, IProject>({
             query: (post) => ({
                 url: `/projects/${post.id}`,
                 method: "DELETE",
@@ -41,8 +41,8 @@ export const projectApi = createApi({
 });
 
 export const {
-    useCreatePostMutation,
-    useGetAllQuery,
-    useUpdatePostMutation,
-    useDeletePostMutation,
+    useCreateProjectMutation,
+    useGetAllProjectsQuery,
+    useUpdateProjectMutation,
+    useDeleteProjectMutation,
 } = projectApi;

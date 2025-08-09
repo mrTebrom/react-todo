@@ -8,8 +8,10 @@ import {
     PlusOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { useGetAllProjectsQuery } from "../service/project.service";
 const { Sider } = Layout;
 export const AsideApp = () => {
+    const { data } = useGetAllProjectsQuery();
     const basicLink: MenuProps["items"] = [
         {
             key: "inbox",
@@ -62,6 +64,12 @@ export const AsideApp = () => {
                         </Button>
                     </Flex>
                 </Flex>
+                <Menu
+                    mode="inline"
+                    defaultSelectedKeys={["1"]}
+                    defaultOpenKeys={["sub1"]}
+                    items={basicLink}
+                />
             </Sider>
         </>
     );
