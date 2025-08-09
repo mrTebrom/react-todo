@@ -1,9 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { IProject, CreateProject } from "../type/project.type";
+import type {
+    IProject,
+    CreateProject,
+    ICreateProjectResponse,
+} from "../type/project.type";
 
 export const projectApi = createApi({
     reducerPath: "projectAPI",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
     tagTypes: ["Project"],
     endpoints: (build) => ({
         getAllProjects: build.query<IProject[], void>({
@@ -13,15 +17,17 @@ export const projectApi = createApi({
             }),
             providesTags: () => ["Project"],
         }),
-        createProject: build.mutation<IProject, CreateProject>({
-            // создаём с CreateProject
-            query: (post) => ({
-                url: `/projects`,
-                method: "POST",
-                body: post,
-            }),
-            invalidatesTags: ["Project"],
-        }),
+        createProject: build.mutation<ICreateProjectResponse, { name: string }>(
+            {
+                // создаём с CreateProject
+                query: (post) => ({
+                    url: `/projects`,
+                    method: "POST",
+                    body: post,
+                }),
+                invalidatesTags: ["Project"],
+            }
+        ),
         updateProject: build.mutation<IProject, IProject>({
             query: (post) => ({
                 url: `/projects/${post.id}`,

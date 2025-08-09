@@ -8,10 +8,21 @@ import {
     PlusOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { useGetAllProjectsQuery } from "../service/project.service";
+import {
+    useCreateProjectMutation,
+    useGetAllProjectsQuery,
+} from "../service/project.service";
+import { CreateProject } from "../components/project.create";
+import { useState } from "react";
 const { Sider } = Layout;
 export const AsideApp = () => {
+    const [createProjectState, setCreateProjectState] = useState(false);
+
+    const showCreateProjectState = () => setCreateProjectState(true);
+    const hideCreateProjectState = () => setCreateProjectState(false);
+
     const { data } = useGetAllProjectsQuery();
+
     const basicLink: MenuProps["items"] = [
         {
             key: "inbox",
@@ -59,7 +70,12 @@ export const AsideApp = () => {
                     <Divider />
                     <Flex justify="space-between" align="center">
                         <span>Проекты</span>
-                        <Button size="small" shape="circle" type="text">
+                        <Button
+                            size="small"
+                            shape="circle"
+                            type="text"
+                            onClick={showCreateProjectState}
+                        >
                             <PlusOutlined />
                         </Button>
                     </Flex>
@@ -71,6 +87,10 @@ export const AsideApp = () => {
                     items={basicLink}
                 />
             </Sider>
+            <CreateProject
+                open={createProjectState}
+                close={hideCreateProjectState}
+            />
         </>
     );
 };

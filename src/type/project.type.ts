@@ -6,3 +6,7 @@ export interface IProject {
 export interface CreateProject {
     name: string;
 }
+export interface ICreateProjectResponse {
+    message: string;
+    project: IProject;
+}
