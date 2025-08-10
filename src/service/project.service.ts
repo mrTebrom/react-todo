@@ -1,9 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type {
-    IProject,
-    CreateProject,
-    ICreateProjectResponse,
-} from "../type/project.type";
+import type { IProject, ICreateProjectResponse } from "../type/project.type";
 
 export const projectApi = createApi({
     reducerPath: "projectAPI",
@@ -14,6 +10,12 @@ export const projectApi = createApi({
             // здесь IProject[]
             query: () => ({
                 url: `/projects`,
+            }),
+            providesTags: () => ["Project"],
+        }),
+        getOneProject: build.query<IProject, number>({
+            query: (id: number) => ({
+                url: `/projects/${id}`,
             }),
             providesTags: () => ["Project"],
         }),
