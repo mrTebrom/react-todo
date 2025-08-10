@@ -13,12 +13,32 @@ import type { MenuProps } from "antd";
 import { useGetAllProjectsQuery } from "../service/project.service";
 import { CreateProject } from "../components/project.create";
 import { useState } from "react";
+import { DestroyProject } from "../components/project.delete";
 const { Sider } = Layout;
 export const AsideApp = () => {
     const [createProjectState, setCreateProjectState] = useState(false);
-
     const showCreateProjectState = () => setCreateProjectState(true);
     const hideCreateProjectState = () => setCreateProjectState(false);
+
+    const [destroyProjectState, setDestroyProjectState] = useState<{
+        open: boolean;
+        name: string | null;
+        id: number | null;
+    }>({
+        open: false,
+        name: null,
+        id: null,
+    });
+    const showDestroyProjectState = (id: number, name: string) => {
+        setDestroyProjectState({ open: true, id, name });
+    };
+    const hideDestroyProjectState = () => {
+        setDestroyProjectState({
+            open: false,
+            name: null,
+            id: null,
+        });
+    };
 
     const { data } = useGetAllProjectsQuery();
 
@@ -63,6 +83,9 @@ export const AsideApp = () => {
                         danger
                         size="small"
                         style={{ padding: 0 }}
+                        onClick={() =>
+                            showDestroyProjectState(item.id, item.name)
+                        }
                     >
                         Удалить
                     </Button>
@@ -127,6 +150,12 @@ export const AsideApp = () => {
             <CreateProject
                 open={createProjectState}
                 close={hideCreateProjectState}
+            />
+            <DestroyProject
+                open={destroyProjectState.open}
+                close={hideDestroyProjectState}
+                id={destroyProjectState.id}
+                name={destroyProjectState.name}
             />
         </>
     );

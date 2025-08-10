@@ -1,5 +1,4 @@
 import { Alert, Form, Input, message, Modal } from "antd";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useCreateProjectMutation } from "../service/project.service";
 import { useState } from "react";
 
