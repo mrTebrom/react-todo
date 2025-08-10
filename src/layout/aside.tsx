@@ -15,6 +15,7 @@ import { CreateProject } from "../components/project.create";
 import { useState } from "react";
 import { DestroyProject } from "../components/project.delete";
 import { EditProject } from "../components/project.edit";
+import { Link } from "react-router-dom";
 const { Sider } = Layout;
 export const AsideApp = () => {
     const [createProjectState, setCreateProjectState] = useState(false);
@@ -88,7 +89,11 @@ export const AsideApp = () => {
         },
     ];
     const projectLinks: MenuProps["items"] = data?.map((item) => ({
-        label: item.name,
+        label: (
+            <Link style={{ color: "unset" }} to={"/project/" + item.id}>
+                {item.name}
+            </Link>
+        ),
         key: item.id,
         icon: <FileOutlined />,
         children: [

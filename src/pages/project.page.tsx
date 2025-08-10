@@ -1,3 +1,10 @@
+import { Flex, Form } from "antd";
+
 export const ProjectPage = () => {
-    return <>task</>;
+    return (
+        <Flex>
+            <Flex></Flex>
+            <Form></Form>
+        </Flex>
+    );
 };
