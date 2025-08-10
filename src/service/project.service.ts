@@ -51,6 +51,7 @@ export const projectApi = createApi({
 export const {
     useCreateProjectMutation,
     useGetAllProjectsQuery,
+    useGetOneProjectQuery,
     useUpdateProjectMutation,
     useDeleteProjectMutation,
 } = projectApi;

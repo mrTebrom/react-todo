@@ -14,6 +14,7 @@ import { useGetAllProjectsQuery } from "../service/project.service";
 import { CreateProject } from "../components/project.create";
 import { useState } from "react";
 import { DestroyProject } from "../components/project.delete";
+import { EditProject } from "../components/project.edit";
 const { Sider } = Layout;
 export const AsideApp = () => {
     const [createProjectState, setCreateProjectState] = useState(false);
@@ -36,6 +37,23 @@ export const AsideApp = () => {
         setDestroyProjectState({
             open: false,
             name: null,
+            id: null,
+        });
+    };
+
+    const [updateProjectState, setUpdateProjectState] = useState<{
+        open: boolean;
+        id: number | null;
+    }>({
+        open: false,
+        id: null,
+    });
+    const showUpdateProjectState = (id: number) => {
+        setUpdateProjectState({ open: true, id });
+    };
+    const hideUpdateProjectState = () => {
+        setUpdateProjectState({
+            open: false,
             id: null,
         });
     };
@@ -103,6 +121,7 @@ export const AsideApp = () => {
                             padding: 0,
                             color: "#faad14" /* warning color */,
                         }}
+                        onClick={() => showUpdateProjectState(item.id)}
                     >
                         Изменить
                     </Button>
@@ -156,6 +175,11 @@ export const AsideApp = () => {
                 close={hideDestroyProjectState}
                 id={destroyProjectState.id}
                 name={destroyProjectState.name}
+            />
+            <EditProject
+                open={updateProjectState.open}
+                id={updateProjectState.id}
+                close={hideUpdateProjectState}
             />
         </>
     );
